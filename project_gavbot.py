@@ -54,6 +54,8 @@ def gavbot_index():
 @app.route(path+"page/<page>")
 def gavbot_move_page(page):
     """Process a users choice on a page"""
+    with open(app_dir + "/project_gavbot/static/log.txt", "a") as file:
+        file.write("Page Page: " + ",".join(current_bots.keys()))
     if 'username' in session:
         current_bots[session['username']].user_update_page(page)
         return redirect(path)
@@ -66,6 +68,8 @@ def gavbot_login():
     if request.method == "POST":
         session["username"] = request.form["username"]
         current_bots[session["username"]] = gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
+        with open(app_dir + "/project_gavbot/static/log.txt", "a") as file:
+            file.write("Login Page: " + ",".join(current_bots.keys()))
         return redirect(path)
 
 @app.route(path+"logout")
