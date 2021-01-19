@@ -45,9 +45,9 @@ def gavbot_index():
         logged_sessions.append(request.remote_addr)
         gavbot_log_addr(request.remote_addr)
     if 'username' in session:
-        return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
-    else:
-        return render_template(dir_name+"templates/gavbot_index_null.html", path=path)
+        try:
+            return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
+    return render_template(dir_name+"templates/gavbot_index_null.html", path=path)
 
 @app.route(path+"page/<page>")
 def gavbot_move_page(page):
