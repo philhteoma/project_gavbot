@@ -68,6 +68,7 @@ def gavbot_login():
     if request.method == "POST":
         session["username"] = request.form["username"]
         current_bots[session["username"]] = gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
+        session["gavbot"] = gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
         with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
             file.write("Login Page: " + ",".join(current_bots.keys()))
         return redirect(path)
