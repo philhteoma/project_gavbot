@@ -44,8 +44,7 @@ def gavbot_index():
     if request.remote_addr not in logged_sessions:
         logged_sessions.append(request.remote_addr)
         gavbot_log_addr(request.remote_addr)
-    with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
-        file.write("Home Page: " + session["username"] + "\n")
+    log_session("index")
     if 'username' in session:
         try:
             return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
@@ -56,8 +55,7 @@ def gavbot_index():
 @app.route(path+"page/<page>")
 def gavbot_move_page(page):
     """Process a users choice on a page"""
-    with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
-        file.write("Move Page: " + session["username"] + "\n")
+    log_session(page)
     if 'username' in session:
         bot = fetch_bot(session['username'])
         bot.user_update_page(page)
@@ -98,6 +96,13 @@ def fetch_bot(name):
     except KeyError:
         return gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
     
+
+def log_session(f):
+    name = session["username"]
+    if not name or name == "":
+        name = "NoName?"
+    with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
+        file.write(f + ": " + name + "\n")
 
 
 if __name__ == "__main__":
