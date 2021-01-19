@@ -80,6 +80,8 @@ def gavbot_reset():
 
 def gavbot_log_addr(ip):
     """IP logging test idea"""
+    with open("/tmp/flaskTestWrite.txt", "w") as  file:
+        file.write("Here")
     with open(app_dir+"/log/log.txt", "a") as file:
         file.write(ip + "\n")
 
