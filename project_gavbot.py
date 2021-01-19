@@ -58,7 +58,7 @@ def gavbot_move_page(page):
         file.write("Page Page: " + ",".join(current_bots.keys()))
     if 'username' in session:
         bot = fetch_bot(session['username'])
-        current_bots[session['username']].user_update_page(page)
+        bot.user_update_page(page)
         return redirect(path)
     else:
         return redirect(path)
