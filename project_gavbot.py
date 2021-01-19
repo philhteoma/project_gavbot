@@ -96,8 +96,9 @@ def fetch_bot(name):
     
 
 def log_session(f):
-    name = session["username"]
-    if not name or name == "":
+    try:
+        name = session["username"]
+    except:
         name = "NoName?"
     with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
         file.write(f + ": " + name + "\n")
