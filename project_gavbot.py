@@ -47,7 +47,7 @@ def gavbot_index():
     if 'username' in session:
         try:
             return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
-        except:
+        except KeyError:
             pass
     return render_template(dir_name+"templates/gavbot_index_null.html", path=path)
 
@@ -57,6 +57,7 @@ def gavbot_move_page(page):
     with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
         file.write("Page Page: " + ",".join(current_bots.keys()))
     if 'username' in session:
+        bot = fetch_bot(session['username'])
         current_bots[session['username']].user_update_page(page)
         return redirect(path)
     else:
@@ -68,7 +69,6 @@ def gavbot_login():
     if request.method == "POST":
         session["username"] = request.form["username"]
         current_bots[session["username"]] = gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
-        session["gavbot"] = gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
         with open(app_dir + "/project_gavbot/log/log.txt", "a") as file:
             file.write("Login Page: " + ",".join(current_bots.keys()))
         return redirect(path)
@@ -91,6 +91,13 @@ def gavbot_log_addr(ip):
         file.write("Here")
     with open(app_dir+"/log/log.txt", "a") as file:
         file.write(ip + "\n")
+
+def fetch_bot(name):
+    try:
+        return current_bots[session['username']]
+    except KeyError:
+        return gavbot_page_manager.Gavbot(session["username"], path=script_dir+"/")
+    
 
 
 if __name__ == "__main__":
