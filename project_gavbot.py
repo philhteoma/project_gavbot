@@ -46,11 +46,8 @@ def gavbot_index():
         gavbot_log_addr(request.remote_addr)
     log_session("index")
     if 'username' in session:
-        try:
-            # return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
-            render_template(dir_name+"templates/gavbot_index.html", gavbot=fetch_bot(session['username']), path=path)
-        except KeyError:
-            pass
+        # return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
+        render_template(dir_name+"templates/gavbot_index.html", gavbot=fetch_bot(session['username']), path=path)
     return render_template(dir_name+"templates/gavbot_index_null.html", path=path)
 
 @app.route(path+"page/<page>")
