@@ -47,6 +47,8 @@ def gavbot_index():
     if 'username' in session:
         try:
             return render_template(dir_name+"templates/gavbot_index.html", gavbot=current_bots[session['username']], path=path)
+        except:
+            pass
     return render_template(dir_name+"templates/gavbot_index_null.html", path=path)
 
 @app.route(path+"page/<page>")
