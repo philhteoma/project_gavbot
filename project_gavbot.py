@@ -3,10 +3,9 @@ sys.path.append(os.path.dirname(__file__))
 import gavbot_page_manager
 
 if __name__ == "__main__":
-    from flask import Flask, app, request, session, render_template, redirect, send_from_directory
+    from flask import Flask, app, request, session, render_template, redirect, send_from_directory, g
 else:
-    from philsite import philsite, app, request, session, render_template, redirect, send_from_directory
-
+    from philsite import philsite, app, request, session, render_template, redirect, send_from_directory, g
 
 #Run as Standalone
 if __name__ == "__main__":
@@ -28,8 +27,9 @@ else:
 
 
 script_dir = os.path.dirname(os.path.realpath(__file__))        #Directory for Gavbot class to use
-app.jinja_env.autoescape = False                                #Turn off autoescaping for serving files (Sec issue, work on later)
-current_bots = {}                                               #Currently active gavbot users
+app.jinja_env.autoescape = True                                #Turn off autoescaping for serving files (Sec issue, work on later)
+current_bots = {}
+# g["current_bots"] = {}                                               #Currently active gavbot users
 logged_sessions = []                                            #IP sessions logged
 app.secret_key = os.urandom(32)                                 #Secert key for sessions
 
